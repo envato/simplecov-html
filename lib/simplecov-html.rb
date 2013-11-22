@@ -18,9 +18,12 @@ class SimpleCov::Formatter::HTMLFormatter
     File.open(File.join(output_path, "index.html"), "w+") do |file|
       file.puts template('layout').result(binding)
     end
-    #commenting this out as the stream seems to be closed in some situations
-    #so this produces an error every time
-    #puts output_message(result)
+
+    begin
+      puts output_message(result)
+    rescue IOError
+      return
+    end
   end
 
   def output_message(result)
